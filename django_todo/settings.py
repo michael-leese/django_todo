@@ -36,6 +36,12 @@ else:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+if "RUN_PRODUCTION" in os.environ:
+    DB_URL = os.environ.get('DB_URL')
+else:
+    print("Get local env.py setting")
+    DB_URL = DB_URL
+    
 ALLOWED_HOSTS = []
 
 CSRF_TRUSTED_ORIGINS = ['https://{}'.format(DB_URL)]
