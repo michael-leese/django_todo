@@ -29,12 +29,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 if "RUN_PRODUCTION" in os.environ:
     # SECURITY WARNING: keep the secret key used in production secret!
     SECRET_KEY = os.environ.get('SECRET_KEY')
+    # SECURITY WARNING: don't run with debug turned on in production!
+    DEBUG = False
 else:
     print("Running locally use env.py for keys")
     SECRET_KEY = SECRET_KEY
+    DEBUG = True
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 if "RUN_PRODUCTION" in os.environ:
     DB_URL = os.environ.get('DB_URL')
@@ -42,7 +43,7 @@ else:
     print("Get local env.py setting")
     DB_URL = DB_URL
     
-ALLOWED_HOSTS = ['https://intense-taiga-13993-89b2a51cb297.herokuapp.com']
+ALLOWED_HOSTS = ['intense-taiga-13993.herokuapp.com/']
 
 CSRF_TRUSTED_ORIGINS = ['https://{}'.format(DB_URL)]
 
@@ -164,3 +165,13 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_REPLACE_HTTPS_REFERER      = True
+HOST_SCHEME                     = "https://"
+SECURE_PROXY_SSL_HEADER         = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT             = True
+SESSION_COOKIE_SECURE           = True
+CSRF_COOKIE_SECURE              = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS  = True
+SECURE_HSTS_SECONDS             = 1000000
+SECURE_FRAME_DENY               = True
