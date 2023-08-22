@@ -12,10 +12,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 
-if os.path.exists('charity_fund/env.py'):
-    from .env import SECRET_KEY, DATABASE_URL, STRIPE_SECRET_KEY, STRIPE_PUB_KEY, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
-    
+if os.path.exists('django_todo/env.py'):
+    from .env import SECRET_KEY, DATABASE_URL, DB_NAME, DB_USER, DB_PASSWORD, DB_PORT, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -92,16 +93,29 @@ WSGI_APPLICATION = 'django_todo.wsgi.application'
 #    }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dbdjangotodo',
-        'USER': 'admindjangotodo',
-        'PASSWORD': 'admindjangotodo',
-        'HOST': 'dbdjangotodo.csgvcdn0itnv.us-east-1.rds.amazonaws.com',
-        'PORT': '5432',
+if "RUN_PRODUCTION" in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('DB_NAME'),
+            'USER': os.environ.get('DB_USER'),
+            'PASSWORD': os.environ.get('DB_PASSWORD'),
+            'HOST': os.environ.get('DATABASE_URL'),
+            'PORT': os.environ.get('DB_PORT'),
+        }
     }
-}
+else:
+    print("Running locally use env.py for DB")
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': DB_NAME,
+            'USER': DB_USER,
+            'PASSWORD': DB_PASSWORD,
+            'HOST': DATABASE_URL,
+            'PORT': DB_PORT,
+        }
+    }
 
 
 # Password validation
