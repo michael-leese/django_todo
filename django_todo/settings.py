@@ -43,7 +43,9 @@ else:
     print("Get local env.py setting")
     DB_URL = DB_URL
     
-ALLOWED_HOSTS = ['intense-taiga-13993-89b2a51cb297.herokuapp.com/']
+ALLOWED_HOSTS = ['intense-taiga-13993-89b2a51cb297.herokuapp.com',
+                 'localhost',
+                 ]
 
 CSRF_TRUSTED_ORIGINS = ['https://{}'.format(DB_URL)]
 
