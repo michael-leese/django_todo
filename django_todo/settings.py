@@ -15,7 +15,7 @@ import os
 import dj_database_url
 
 if os.path.exists('django_todo/env.py'):
-    from .env import SECRET_KEY, DATABASE_URL, DB_NAME, DB_USER, DB_PASSWORD, DB_PORT, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+    from .env import SECRET_KEY, DB_URL, DB_NAME, DB_USER, DB_PASSWORD, DB_PORT, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -38,7 +38,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-CSRF_TRUSTED_ORIGINS = ['https://{}'.format(DATABASE_URL)]
+CSRF_TRUSTED_ORIGINS = ['https://{}'.format(DB_URL)]
 
 # Application definition
 
@@ -100,7 +100,7 @@ if "RUN_PRODUCTION" in os.environ:
             'NAME': os.environ.get('DB_NAME'),
             'USER': os.environ.get('DB_USER'),
             'PASSWORD': os.environ.get('DB_PASSWORD'),
-            'HOST': os.environ.get('DATABASE_URL'),
+            'HOST': os.environ.get('DB_URL'),
             'PORT': os.environ.get('DB_PORT'),
         }
     }
@@ -112,7 +112,7 @@ else:
             'NAME': DB_NAME,
             'USER': DB_USER,
             'PASSWORD': DB_PASSWORD,
-            'HOST': DATABASE_URL,
+            'HOST': DB_URL,
             'PORT': DB_PORT,
         }
     }
