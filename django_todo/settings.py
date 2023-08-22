@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+
+if os.path.exists('charity_fund/env.py'):
+    from .env import SECRET_KEY, DATABASE_URL, STRIPE_SECRET_KEY, STRIPE_PUB_KEY, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+    
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,13 +25,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%p*fn#0brb+h_&e2jcz14w)!l=j+xi0lz#qjx1u)hc9t1j)e_f'
+if "RUN_PRODUCTION" in os.environ:
+    # SECURITY WARNING: keep the secret key used in production secret!
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+else:
+    print("Running locally use env.py for keys")
+    SECRET_KEY = SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CSRF_TRUSTED_ORIGINS = ['https://{}'.format(DATABASE_URL)]
 
 # Application definition
 
@@ -74,10 +85,21 @@ WSGI_APPLICATION = 'django_todo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'dbdjangotodo',
+        'USER': 'admindjangotodo',
+        'PASSWORD': 'admindjangotodo',
+        'HOST': 'dbdjangotodo.csgvcdn0itnv.us-east-1.rds.amazonaws.com',
+        'PORT': '5432',
     }
 }
 

@@ -19,7 +19,6 @@ from django.urls import path, include
 from todo import views 
 
 urlpatterns = [
-    path('',include('djangoapp.urls')),
     path('admin/', admin.site.urls),
     path('', views.get_todo_list, name='get_todo_list'),
     path('add/', views.add_item, name='add'),
