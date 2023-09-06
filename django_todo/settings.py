@@ -43,7 +43,7 @@ else:
     print("Get local env.py setting")
     DB_URL = DB_URL
     
-ALLOWED_HOSTS = ['.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS = ['https://{}'.format(DB_URL)]
 
