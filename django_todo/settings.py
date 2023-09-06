@@ -44,8 +44,8 @@ else:
     DB_URL = DB_URL
     
 ALLOWED_HOSTS = ['localhost', '127.0.0.1:8000', 'intense-taiga-13993-89b2a51cb297.herokuapp.com']
-CSRF_TRUSTED_ORIGINS = [DB_URL]
-# CSRF_TRUSTED_ORIGINS = ['https://{}'.format(DB_URL)]
+
+CSRF_TRUSTED_ORIGINS = ['https://{}'.format(DB_URL)]
 
 # Application definition
 
@@ -93,36 +93,36 @@ WSGI_APPLICATION = 'django_todo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.sqlite3',
-       'NAME': BASE_DIR / 'db.sqlite3',
-   }
-}
+# DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+# }
 
-# if "RUN_PRODUCTION" in os.environ:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.postgresql',
-#             'NAME': os.environ.get('DB_NAME'),
-#             'USER': os.environ.get('DB_USER'),
-#             'PASSWORD': os.environ.get('DB_PASSWORD'),
-#             'HOST': os.environ.get('DB_URL'),
-#             'PORT': os.environ.get('DB_PORT'),
-#         }
-#     }
-# else:
-#     print("Running locally use env.py for DB")
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.postgresql',
-#             'NAME': DB_NAME,
-#             'USER': DB_USER,
-#             'PASSWORD': DB_PASSWORD,
-#             'HOST': DB_URL,
-#             'PORT': DB_PORT,
-#         }
-#     }
+if "RUN_PRODUCTION" in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('DB_NAME'),
+            'USER': os.environ.get('DB_USER'),
+            'PASSWORD': os.environ.get('DB_PASSWORD'),
+            'HOST': os.environ.get('DB_URL'),
+            'PORT': os.environ.get('DB_PORT'),
+        }
+    }
+else:
+    print("Running locally use env.py for DB")
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': DB_NAME,
+            'USER': DB_USER,
+            'PASSWORD': DB_PASSWORD,
+            'HOST': DB_URL,
+            'PORT': DB_PORT,
+        }
+    }
 
 
 # Password validation
